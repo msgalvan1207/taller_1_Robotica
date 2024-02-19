@@ -1,0 +1,26 @@
+[1.706s] Invoking command in '/home/robotica/taller_1/src/turtle_bot_3': PYTHONPATH=/home/robotica/taller_1/build/turtle_bot_3/prefix_override:/home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/turtle_bot_3 build --build-base /home/robotica/taller_1/build/turtle_bot_3/build install --record /home/robotica/taller_1/build/turtle_bot_3/install.log --single-version-externally-managed
+[2.304s] running egg_info
+[2.305s] writing ../../build/turtle_bot_3/turtle_bot_3.egg-info/PKG-INFO
+[2.306s] writing dependency_links to ../../build/turtle_bot_3/turtle_bot_3.egg-info/dependency_links.txt
+[2.306s] writing entry points to ../../build/turtle_bot_3/turtle_bot_3.egg-info/entry_points.txt
+[2.307s] writing requirements to ../../build/turtle_bot_3/turtle_bot_3.egg-info/requires.txt
+[2.307s] writing top-level names to ../../build/turtle_bot_3/turtle_bot_3.egg-info/top_level.txt
+[2.310s] reading manifest file '../../build/turtle_bot_3/turtle_bot_3.egg-info/SOURCES.txt'
+[2.311s] adding license file 'LICENSE'
+[2.313s] writing manifest file '../../build/turtle_bot_3/turtle_bot_3.egg-info/SOURCES.txt'
+[2.314s] running build
+[2.314s] running build_py
+[2.314s] copying turtle_bot_3/turtle_bot_teleop.py -> /home/robotica/taller_1/build/turtle_bot_3/build/lib/turtle_bot_3
+[2.315s] running install
+[2.315s] running install_lib
+[2.317s] copying /home/robotica/taller_1/build/turtle_bot_3/build/lib/turtle_bot_3/turtle_bot_teleop.py -> /home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages/turtle_bot_3
+[2.318s] byte-compiling /home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages/turtle_bot_3/turtle_bot_teleop.py to turtle_bot_teleop.cpython-310.pyc
+[2.320s] running install_data
+[2.321s] running install_egg_info
+[2.324s] removing '/home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages/turtle_bot_3-0.0.0-py3.10.egg-info' (and everything under it)
+[2.325s] Copying ../../build/turtle_bot_3/turtle_bot_3.egg-info to /home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages/turtle_bot_3-0.0.0-py3.10.egg-info
+[2.327s] running install_scripts
+[2.372s] Installing my_node script to /home/robotica/taller_1/install/turtle_bot_3/lib/turtle_bot_3
+[2.373s] Installing node1 script to /home/robotica/taller_1/install/turtle_bot_3/lib/turtle_bot_3
+[2.374s] writing list of installed files to '/home/robotica/taller_1/build/turtle_bot_3/install.log'
+[2.424s] Invoked command in '/home/robotica/taller_1/src/turtle_bot_3' returned '0': PYTHONPATH=/home/robotica/taller_1/build/turtle_bot_3/prefix_override:/home/robotica/taller_1/install/turtle_bot_3/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/turtle_bot_3 build --build-base /home/robotica/taller_1/build/turtle_bot_3/build install --record /home/robotica/taller_1/build/turtle_bot_3/install.log --single-version-externally-managed
