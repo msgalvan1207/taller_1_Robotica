@@ -134,7 +134,7 @@ def writeShitpost(**kwargs):
         file = kwargs.get("file", None)
         msg = kwargs.get("msg", None)
         if file and not file.closed:
-            file.write("El que lo lea es demisexual lmao")
+            file.write("El que lo lea es de indusplay :v")
             file.write("\n")
             file.write("But el que lo escribio tambien lo leyo")
             file.write("\n")
