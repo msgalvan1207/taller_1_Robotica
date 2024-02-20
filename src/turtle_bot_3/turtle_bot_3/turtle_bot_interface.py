@@ -120,6 +120,7 @@ def writeShitpost(**kwargs):
     #TODO: pasar la definicion de esta funcion en la clase del nodo
     #TODO: que esta funcion sea el callback del subscriptor que recibe los inputs del teleop
     #TODO: que esta funcion reciba el mensaje del subscriptor y que lo escriba en el archivo de texto
+    #TODO: URGENTE: cambiar el nombre de esta funcion
     """Esta función contiene la logica para escribir dentro de un archivo de texto
         La idea seria pasar esta función al callback del subscriptor que recibe los inputs
         del teleop para que los escriba en un archivo de texto.
