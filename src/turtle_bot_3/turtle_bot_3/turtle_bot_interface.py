@@ -109,8 +109,6 @@ class interfaceNode(Node):
 
 
     def velCallback(self, msg):
-        #TODO: logica para escribir en archivo de texto
-        self.get_logger().info("Se recibio un mensaje de velocidad")
         self.file.write("{linearX},{angularZ}".format(linearX=msg.linear.x, angularZ=msg.angular.z))
         self.file.write("\n")
 
@@ -151,43 +149,13 @@ def guardarInputs():
             flag = False
     return file
 
-#TODO: escribir la clase del nodo de interface
 
-
-
-def writeShitpost(**kwargs):
-    #TODO: pasar la definicion de esta funcion en la clase del nodo
-    #TODO: que esta funcion sea el callback del subscriptor que recibe los inputs del teleop
-    #TODO: que esta funcion reciba el mensaje del subscriptor y que lo escriba en el archivo de texto
-    #TODO: URGENTE: cambiar el nombre de esta funcion
-    """Esta función contiene la logica para escribir dentro de un archivo de texto
-        La idea seria pasar esta función al callback del subscriptor que recibe los inputs
-        del teleop para que los escriba en un archivo de texto.
-        
-        Args:
-            **kwargs: diccionario con los argumentos de la función
-                file: archivo de texto en el que se escribira
-            Estoy utilizando **kwargs para que la función sea mas flexible y pueda recibir
-            mas o menos argumentos en el futuro
-    """
+def spinNode(Node):
     try:
-        file = kwargs.get("file", None)
-        msg = kwargs.get("msg", None)
-        if file and not file.closed:
-            file.write("La persona que lo lea es de indusplay :v")
-            file.write("\n")
-            file.write("But el que lo escribio tambien lo leyo")
-            file.write("\n")
-            file.write("Oh no papu")
-            file.write("\n")
-            file.close()
-            print("se cerro el archivo")
-        else:
-            print("No se escribio nada")
+        rclpy.spin(Node)
     except KeyboardInterrupt:
-        print("Se cierra forzosamente el programa")
-        if file and not file.closed:
-            file.close()    
+        pass
+
 
 def main():
     try:
@@ -196,15 +164,15 @@ def main():
         
         
         Node = interfaceNode(file)
-        thread_spin = threading.Thread(target=rclpy.spin, args=(Node,))
+        def spinNode(Node):
+            try:
+                rclpy.spin(Node)
+            except KeyboardInterrupt:
+                pass
+
+        thread_spin = threading.Thread(target=lambda: spinNode(Node))
         thread_spin.start()
-        
-        #Estas lineas estan para probar escritura con asincronismo
-        #Funciona correctamente
-        #TODO: borrar estas lineas
-        #thread_shitpost = threading.Thread(target=lambda: writeShitpost(file=file))
-        #thread_shitpost.start()
-    
+
         root1 = tk.Tk()
         root1.title("Turtle_bot_3")
         root1.geometry("1000x650")
@@ -213,13 +181,21 @@ def main():
         app = MainFrame(root1)
         root1.focus_force()
         root1.mainloop()
-        
+
+        Node.destroy_node()
         rclpy.shutdown()
+        thread_spin.join()
+
+        if file and not file.closed:
+            print("Se cerrara el archivo de texto")
+            file.close()
+        
     except KeyboardInterrupt:
         print("Se cierra forzosamente el programa")
+        Node.destroy_node()
+        rclpy.shutdown()
         if file and not file.closed:
             file.close()
-        rclpy.shutdown()
         #sys.exit(0)
 
 if __name__ == "__main__":
