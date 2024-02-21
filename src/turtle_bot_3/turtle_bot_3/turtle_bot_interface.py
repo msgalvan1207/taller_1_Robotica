@@ -4,9 +4,18 @@ from tkinter.filedialog import asksaveasfilename, asksaveasfile
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from geometry_msgs.msg import Twist
 import threading
 
+#Importar ros
+import rclpy
+from rclpy.node import Node
 
+
+
+
+x = []
+y = []
 
 
 class MainFrame(tk.Frame):
@@ -36,7 +45,8 @@ class MainFrame(tk.Frame):
         txtmsg = "Esta es la interfase de visualización de la posición del robot"
         label1 = tk.Label(self, text=txtmsg, anchor=tk.CENTER, font=("Arial", 11), pady=10)
         label1.pack(side=tk.TOP, fill='both', expand=False)
-    
+
+
     
     def setup_canvas(self, lim=1):
         self.ax.set_xlabel("X")
@@ -82,6 +92,34 @@ class MainFrame(tk.Frame):
         #TODO: invocar una funcion para que limpie la grafica
         #Limpiar la grafica (no se como lmao)
         print("se limpia la grafica wow")
+
+
+class interfaceNode(Node):
+
+    def __init__(self, file):
+        super().__init__("interface_node")
+        self.file = file
+        if file:
+            self.get_logger().info("Se Subscribira a el topico /turtlebot_cmdVel")	
+            self.VelSub = self.create_subscription(Twist, "/turtlebot_cmdVel", self.velCallback, 10)
+        
+        self.get_logger().info("Se Subscribira a el topico /turtlebot_position")
+        self.PosSub = self.create_subscription(Twist, "/turtlebot_position", self.posCallback, 10)
+
+
+
+        def velCallback(self, msg):
+            #TODO: logica para escribir en archivo de texto
+            self.file.write("{linearX},{angularZ}".format(linearX=msg.linear.x, angularZ=msg.angular.z))
+            self.file.write("\n")
+
+        def posCallback(self, msg):
+            #TODO: logica para actualizar el vector de posiciones
+            x.append(msg.linear.x)
+            y.append(msg.linear.y)
+
+        
+
 
 def on_closing(root):
     root.quit()
