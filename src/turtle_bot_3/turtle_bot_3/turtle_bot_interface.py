@@ -191,7 +191,7 @@ def writeShitpost(**kwargs):
 
 def main():
     try:
-        #rclpy.init(args=None)
+        rclpy.init(args=None)
         file = guardarInputs()
         
         
