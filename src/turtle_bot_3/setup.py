@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'my_node = turtle_bot_3.my_node:main',
-            'node1 = turtle_bot_3.turtle_bot_teleop:main',
+            'node_teleop = turtle_bot_3.turtle_bot_teleop:main',
+            'node_interface = turtle_bot_3.turtle_bot_interface:main',
         ],
     },
 )

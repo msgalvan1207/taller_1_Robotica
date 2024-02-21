@@ -194,15 +194,15 @@ def main():
         file = guardarInputs()
         
         
-        #Node = interfaceNode(guardar, file)
-        #thread_spin = threading.Thread(target=rclpy.spin, args=(Node,))
-        #thread_spin.start()
+        Node = interfaceNode(file)
+        thread_spin = threading.Thread(target=rclpy.spin, args=(Node,))
+        thread_spin.start()
         
         #Estas lineas estan para probar escritura con asincronismo
         #Funciona correctamente
         #TODO: borrar estas lineas
-        thread_shitpost = threading.Thread(target=lambda: writeShitpost(file=file))
-        thread_shitpost.start()
+        #thread_shitpost = threading.Thread(target=lambda: writeShitpost(file=file))
+        #thread_shitpost.start()
     
         root1 = tk.Tk()
         root1.title("Turtle_bot_3")
@@ -213,12 +213,12 @@ def main():
         root1.focus_force()
         root1.mainloop()
         
-        #rclpy.shutdown()
+        rclpy.shutdown()
     except KeyboardInterrupt:
         print("Se cierra forzosamente el programa")
         if file and not file.closed:
             file.close()
-        #rclpy.shutdown()
+        rclpy.shutdown()
         #sys.exit(0)
 
 if __name__ == "__main__":
