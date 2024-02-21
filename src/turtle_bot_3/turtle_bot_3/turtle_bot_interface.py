@@ -110,6 +110,7 @@ class interfaceNode(Node):
 
         def velCallback(self, msg):
             #TODO: logica para escribir en archivo de texto
+            self.get_logger().info("Se recibio un mensaje de velocidad")
             self.file.write("{linearX},{angularZ}".format(linearX=msg.linear.x, angularZ=msg.angular.z))
             self.file.write("\n")
 
