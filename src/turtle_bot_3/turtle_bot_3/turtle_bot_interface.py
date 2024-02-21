@@ -190,12 +190,15 @@ def main():
             print("Se cerrara el archivo de texto")
             file.close()
         
+        print("se termino la ejecución del programa")
+        
     except KeyboardInterrupt:
         print("Se cierra forzosamente el programa")
         Node.destroy_node()
         rclpy.shutdown()
         if file and not file.closed:
             file.close()
+        print("se termino la ejecución del programa")
         #sys.exit(0)
 
 if __name__ == "__main__":
