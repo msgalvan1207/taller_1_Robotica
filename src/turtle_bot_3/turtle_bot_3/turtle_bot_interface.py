@@ -80,18 +80,30 @@ class MainFrame(tk.Frame):
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
         print("se inicia la animacion")
+        if self.ani:
+            self.ani.resume()
+        else:
+            self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
         #self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
     
     def stopAnimation(self):
         #TODO: invocar ani.event_source.stop() para detener la animación
         #Detener la animación
-        print("se detiene la animacion")
+        if self.ani:
+            self.ani.pause()
         #self.ani.event_source.stop()
 
     def clearPlot(self):
         #TODO: invocar una funcion para que limpie la grafica
         #Limpiar la grafica (no se como lmao)
         print("se limpia la grafica wow")
+    
+    def animate(self,i):
+        #Generacion de valores
+        #Esto no es necesario ya que el nodo se encarga de actualizar datos
+        self.ax.cla()
+        self.ax.plot(x,y)
+
 
 
 class interfaceNode(Node):
