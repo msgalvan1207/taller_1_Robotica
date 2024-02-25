@@ -135,7 +135,7 @@ class MainFrame(tk.Frame):
             if not self.Node.cli.wait_for_service(timeout_sec=1.0):
                 showwarning("Servicio no disponible", "El servicio no esta disponible")
             else:
-                self.Node.cli = self.Node.create_client(String, "turtlebot_player")
+                self.Node.cli = self.Node.create_client(String, "turtle_bot_player")
                 self.Node.req = String.Request()
 
     def sendFile(self):
