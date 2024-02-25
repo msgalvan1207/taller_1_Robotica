@@ -1,10 +1,11 @@
 import tkinter as tk
-from tkinter.messagebox import askyesno
-from tkinter.filedialog import asksaveasfilename, asksaveasfile
+from tkinter.messagebox import askyesno, showwarning 
+from tkinter.filedialog import asksaveasfile, askopenfilename
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from geometry_msgs.msg import Twist
+from string_srv.srv import String
 import threading
 
 #Importar ros
@@ -23,7 +24,7 @@ class MainFrame(tk.Frame):
         Esta clase extiende de tk.Frame. 
 
     """
-    def __init__(self, root=None):
+    def __init__(self, root=None, Node=None):
         tk.Frame.__init__(self, master=root)
         self.pack(side='top', fill='both', expand=False, padx=5, pady=5)
         fig, ax = plt.subplots()
@@ -31,6 +32,7 @@ class MainFrame(tk.Frame):
         self.ax = ax
         self.ani = None
         self.aniFlag = False
+        self.Node = Node
         self.setup_gui()
         
         
@@ -38,6 +40,7 @@ class MainFrame(tk.Frame):
         self.setup_label()
         self.setup_canvas(lim=5)
         self.setup_buttons()
+        self.setup_client_buttons()
     
 
     def setup_label(self):
@@ -75,6 +78,15 @@ class MainFrame(tk.Frame):
         self.btn3 = tk.Button(frm, text="Clear", command=self.clearPlot, height=height, width=width)
         self.btn3.pack(side=tk.LEFT)
     
+    def setup_client_buttons(self):
+        height, width = 2, 10
+        frm = tk.Frame(master=self, relief=tk.RAISED)
+        frm.pack()
+        self.btn4 = tk.Button(frm, text="Create client", command=self.createClient, height=height, width=width)
+        self.btn4.pack(side=tk.LEFT)
+        self.btn5 = tk.Button(frm, text="Send file", command=self.sendFile, height=height, width=width)
+        self.btn5.pack(side=tk.LEFT)
+    
     
     def startAnimation(self):
         #TODO: invocar FuncAnimation para que empieze a animar
@@ -82,7 +94,7 @@ class MainFrame(tk.Frame):
         #Iniciar la animación
         print("se inicia la animacion")
         if self.ani is None:
-            self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
+            self.ani = FuncAnimation(self.fig, lambda i: self.animate(self,i), interval=1000)
         else:
             if not(self.aniFlag):
                 self.ani.event_source.start()
@@ -114,7 +126,33 @@ class MainFrame(tk.Frame):
         #Esto no es necesario ya que el nodo se encarga de actualizar datos
         self.ax.cla()
         self.ax.plot(x,y)
+        
+    def createClient(self):
+        if self.Node.cli:
+            showwarning("Cliente ya creado", "El cliente ya fue creado")
+        else:
+            ##El contenido de la funcion create client no estoy seguro de como deba ser
+            if not self.Node.cli.wait_for_service(timeout_sec=1.0):
+                showwarning("Servicio no disponible", "El servicio no esta disponible")
+            else:
+                self.Node.cli = self.Node.create_client(String, "turtlebot_player")
+                self.Node.req = String.Request()
 
+    def sendFile(self):
+        if self.Node.cli:
+            if not self.Node.cli.wait_for_service(timeout_sec=1.0):
+                showwarning("Servicio no disponible", "El servicio no esta disponible")
+            else:
+                file = askopenfilename(filetypes=[("Text files", "*.txt")])
+                if file:
+                    self.Node.req.data = file
+                    self.Node.future = self.Node.cli.call_async(self.Node.req)
+                else:
+                    showwarning("Archivo no seleccionado", "No se envio ningun archivo")
+        else:
+            showwarning("Cliente no creado", "Primero debe crear el cliente")
+
+    
 
 
 class interfaceNode(Node):
@@ -187,11 +225,6 @@ def main():
         
         
         Node = interfaceNode(file)
-        def spinNode(Node):
-            try:
-                rclpy.spin(Node)
-            except KeyboardInterrupt:
-                pass
 
         thread_spin = threading.Thread(target=lambda: spinNode(Node))
         thread_spin.start()
@@ -201,7 +234,7 @@ def main():
         root1.geometry("1000x650")
         root1.protocol("WM_DELETE_WINDOW", lambda: on_closing(root1))
         root1.resizable(False, False)
-        app = MainFrame(root1)
+        app = MainFrame(root1,Node)
         root1.focus_force()
         root1.mainloop()
 
