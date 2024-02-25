@@ -76,54 +76,75 @@ def startListeners():
 
 
 class TurtleBotTeleopNode(Node):
-   
-   msg = Twist()
-
-   #global key
-
-   def __init__(self):
-       super().__init__("turtleController")
-       key = 0
-       self.turtle_controller = self.create_publisher(Twist, "/turtlebot_cmdVel", 10)
-       self.timer_ = self.create_timer(0.05, self.send_velocity_command)
-       #self.timerkey_ = self.create_timer(0.05, self.get_keys)
-       self.get_logger().info("Nodo turtle_bot_teleop creado correctamente")
 
 
-   
-       
-   def send_velocity_command(self):
-       #input = self.get_keys()
-       #input = key
+    #global key
+
+    def __init__(self, linearVel, angularVel):
+        super().__init__("turtleController")
+        self.linearVel = linearVel
+        self.angularVel = angularVel
+        self.msg = Twist()
+        key = 0
+        self.turtle_controller = self.create_publisher(Twist, "/turtlebot_cmdVel", 10)
+        self.timer_ = self.create_timer(0.05, self.send_velocity_command)
+        #self.timerkey_ = self.create_timer(0.05, self.get_keys)
+        self.get_logger().info("Nodo turtle_bot_teleop creado correctamente")
 
 
-       self.msg.linear.x, self.msg.angular.z = 0.0, 0.0
-       if(press['w']): #up
-           self.msg.linear.x += 1.0
-       if(press['s']): #down
-           self.msg.linear.x += -1.0
-       if(press['a']): #left
-           self.msg.angular.z += 1.0
-       if(press['d']): #right
-           self.msg.angular.z += -1.0
+    def send_velocity_command(self):
+        self.msg.linear.x, self.msg.angular.z = 0.0, 0.0
+        if(press['w']): #up
+            self.msg.linear.x += 1.0 * self.linearVel
+        if(press['s']): #down
+            self.msg.linear.x += -1.0 * self.linearVel
+        if(press['a']): #left
+            self.msg.angular.z += 1.0 * self.angularVel
+        if(press['d']): #right
+            self.msg.angular.z += -1.0 * self.angularVel
 
-       self.turtle_controller.publish(self.msg)
+        self.turtle_controller.publish(self.msg)
+
+
+def getLinealVelocity():
+    while True:
+        entry = input("ingrese la velocidad lineal: ")
+        try:
+            entry = float(entry)
+            if not(entry > 0 and entry < 5):
+                raise Exception
+            return entry
+        except Exception as e:
+            print("Error, el valor ingresado no es valido, vuelva a intentarlo")
+
+def getAngularVelocity():
+    while True:
+        entry = input("ingrese la velocidad angular: ")
+        try:
+            entry = float(entry)
+            if not(entry > 0 and entry < 5):
+                raise Exception
+            return entry
+        except Exception as e:
+            print("Error, el valor ingresado no es valido, vuelva a intentarlo")
 
 
 
 def main(args=None):
-   startListeners()
-   rclpy.init(args=args)
-   tty.setcbreak(sys.stdin)
-   node = TurtleBotTeleopNode()
-   while cont:
-       rclpy.spin_once(node)
-   rclpy.shutdown()
-   termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-   node.get_logger().info('Se termina la ejecucion del nodo')
-   sys.exit(0)
+    linealVel = getLinealVelocity()
+    angularVel = getAngularVelocity()
+    startListeners()
+    rclpy.init(args=args)
+    tty.setcbreak(sys.stdin)
+    node = TurtleBotTeleopNode(linealVel, angularVel)
+    while cont:
+        rclpy.spin_once(node)
+    rclpy.shutdown()
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    node.get_logger().info('Se termina la ejecucion del nodo')
+    sys.exit(0)
 
 
 if __name__ == '__main__':
-   main()
+    main()
 
