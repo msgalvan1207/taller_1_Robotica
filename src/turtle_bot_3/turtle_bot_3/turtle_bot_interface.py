@@ -30,6 +30,7 @@ class MainFrame(tk.Frame):
         self.fig = fig
         self.ax = ax
         self.ani = None
+        self.aniFlag = False
         self.setup_gui()
         
         
@@ -80,23 +81,33 @@ class MainFrame(tk.Frame):
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
         print("se inicia la animacion")
-        if self.ani:
-            self.ani.resume()
-        else:
+        if self.ani is None:
             self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
+        else:
+            if not(self.aniFlag):
+                self.ani.event_source.start()
+                self.aniFlag = True
+            else:
+                pass
+            
         #self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
     
     def stopAnimation(self):
         #TODO: invocar ani.event_source.stop() para detener la animación
         #Detener la animación
-        if self.ani:
-            self.ani.pause()
-        #self.ani.event_source.stop()
+        if self.aniFlag:
+            self.ani.event_source.stop()
+            self.aniFlag = False
 
     def clearPlot(self):
         #TODO: invocar una funcion para que limpie la grafica
         #Limpiar la grafica (no se como lmao)
-        print("se limpia la grafica wow")
+        self.ax.clear()
+        x.clear()
+        y.clear()
+        self.ax.plot(x,y)
+        self.fig.canvas.draw_idle()
+        
     
     def animate(self,i):
         #Generacion de valores
