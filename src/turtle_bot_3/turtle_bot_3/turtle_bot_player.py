@@ -1,5 +1,5 @@
 import traceback
-from string_srv.srv import String
+from custom_interfaces.srv import String
 from geometry_msgs.msg import Twist
 import time
 

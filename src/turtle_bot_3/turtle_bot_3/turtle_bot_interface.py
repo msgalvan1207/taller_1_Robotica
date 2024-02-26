@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from geometry_msgs.msg import Twist
-from string_srv.srv import String
+from custom_interfaces.srv import String
 import threading
 
 #Importar ros
@@ -231,7 +231,7 @@ def main():
 
         root1 = tk.Tk()
         root1.title("Turtle_bot_3")
-        root1.geometry("1000x650")
+        #root1.geometry("1000x650")
         root1.protocol("WM_DELETE_WINDOW", lambda: on_closing(root1))
         root1.resizable(False, False)
         app = MainFrame(root1,Node)
