@@ -131,6 +131,7 @@ class MainFrame(tk.Frame):
         #Esto no es necesario ya que el nodo se encarga de actualizar datos
         self.ax.cla()
         self.ax.plot(x,y)
+        self.setAxes(lim = 5)
         
     def createClient(self):
         if self.Node.cli:
