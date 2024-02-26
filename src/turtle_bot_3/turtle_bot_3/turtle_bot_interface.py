@@ -55,11 +55,7 @@ class MainFrame(tk.Frame):
 
     
     def setup_canvas(self, lim=1):
-        self.ax.set_xlabel("X")
-        self.ax.set_ylabel("Y")
-        self.ax.set(xlim=(-lim-lim*0.1, lim+lim*0.1), ylim=(-lim-lim*0.1, lim+lim*0.1))
-        self.ax.grid()
-        self.ax.set_aspect('equal')
+        self.setAxes(lim)
         
         
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
@@ -94,15 +90,16 @@ class MainFrame(tk.Frame):
         #TODO: invocar FuncAnimation para que empieze a animar
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
-        print("se inicia la animacion")
         if self.ani is None:
             print(inspect.signature(lambda i: self.animate(self,i)))
             self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
-            print('salio de la funcion start animation')
+            self.aniFlag = True
+            self.Node.get_logger().info("Se creo la animacion")
         else:
             if not(self.aniFlag):
                 self.ani.event_source.start()
                 self.aniFlag = True
+                self.Node.get_logger().info("Se reanudo la animacion")
             else:
                 pass
             
@@ -114,6 +111,9 @@ class MainFrame(tk.Frame):
         if self.aniFlag:
             self.ani.event_source.stop()
             self.aniFlag = False
+            self.Node.get_logger().info("Se detuvo la animacion")
+        else:
+            self.Node.get_logger().info("La animacion ya esta detenida")
 
     def clearPlot(self):
         #TODO: invocar una funcion para que limpie la grafica
@@ -121,8 +121,8 @@ class MainFrame(tk.Frame):
         self.ax.clear()
         x.clear()
         y.clear()
+        self.setAxes()
         self.ax.plot(x,y)
-        print('el programa explota por aqui')
         self.fig.canvas.draw_idle()
         
     
@@ -152,7 +152,13 @@ class MainFrame(tk.Frame):
                     showwarning("Archivo no seleccionado", "No se envio ningun archivo")
         else:
             showwarning("Cliente no creado", "Primero debe crear el cliente")
-
+    
+    def setAxes(self, lim=1):
+        self.ax.set_xlabel("X")
+        self.ax.set_ylabel("Y")
+        self.ax.set(xlim=(-lim-lim*0.1, lim+lim*0.1), ylim=(-lim-lim*0.1, lim+lim*0.1))
+        self.ax.grid()
+        self.ax.set_aspect('equal')
     
 
 
