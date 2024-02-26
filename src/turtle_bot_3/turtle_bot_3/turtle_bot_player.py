@@ -28,6 +28,7 @@ class turtleBotPlayer(Node):
                 self.turtle_player.publish(self.msg)
                 time.sleep(0.05)
             file.close()
+            self.get_logger().info('Archivo leido en su totalidad y movimientos publicados correctamente')
             return response
         except Exception as e:
             print("fallo el servicio de publicar movimiento")
@@ -42,6 +43,7 @@ def main(args=None):
         
         rclpy.shutdown()
     except KeyboardInterrupt:
+        print("KeyboardInterrupt")
         rclpy.shutdown()
 
 
