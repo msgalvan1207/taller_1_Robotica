@@ -12,6 +12,8 @@ import threading
 import rclpy
 from rclpy.node import Node
 
+import inspect
+
 
 
 
@@ -94,7 +96,9 @@ class MainFrame(tk.Frame):
         #Iniciar la animación
         print("se inicia la animacion")
         if self.ani is None:
-            self.ani = FuncAnimation(self.fig, lambda i: self.animate(self,i), interval=1000)
+            print(inspect.signature(lambda i: self.animate(self,i)))
+            self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
+            print('salio de la funcion start animation')
         else:
             if not(self.aniFlag):
                 self.ani.event_source.start()
@@ -118,6 +122,7 @@ class MainFrame(tk.Frame):
         x.clear()
         y.clear()
         self.ax.plot(x,y)
+        print('el programa explota por aqui')
         self.fig.canvas.draw_idle()
         
     
