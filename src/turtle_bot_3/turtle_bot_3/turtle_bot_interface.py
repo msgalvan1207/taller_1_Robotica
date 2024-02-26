@@ -91,7 +91,8 @@ class MainFrame(tk.Frame):
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
         if self.ani is None:
-            self.ani = FuncAnimation(self.fig, self.animate, interval=1000, blit=True)
+            self.ani = FuncAnimation(self.fig, self.animate, interval=1000, blit=False, cache_frame_data=False)
+            self.fig.canvas.draw_idle()
             self.aniFlag = True
             self.Node.get_logger().info("Se inicio la animacion")
         else:
@@ -105,7 +106,7 @@ class MainFrame(tk.Frame):
             
     
     def stopAnimation(self):
-        if self.aniFlag:
+        if self.aniFlag and self.ani:
             self.ani.event_source.stop()
             self.aniFlag = False
             self.Node.get_logger().info("Se detuvo la animacion")
@@ -128,6 +129,7 @@ class MainFrame(tk.Frame):
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 5)
+        #return lines
         
     def createClient(self):
         if self.Node.cli:
