@@ -124,8 +124,9 @@ class MainFrame(tk.Frame):
         
     
     def animate(self,i):
-        print(x[-1])
-        print(y[-1])
+        #Estas lineas de aqui estan para poder hacer debug
+        #print(x[-1])
+        #print(y[-1])
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 5)
