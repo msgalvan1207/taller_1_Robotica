@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.messagebox import askyesno, showwarning 
+from tkinter.messagebox import askyesno, showwarning, showinfo
 from tkinter.filedialog import asksaveasfile, askopenfilename
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -94,41 +94,36 @@ class MainFrame(tk.Frame):
             print(inspect.signature(lambda i: self.animate(self,i)))
             self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
             self.aniFlag = True
-            self.Node.get_logger().info("Se creo la animacion")
+            self.Node.get_logger().info("Se inicio la animacion")
         else:
             if not(self.aniFlag):
                 self.ani.event_source.start()
                 self.aniFlag = True
                 self.Node.get_logger().info("Se reanudo la animacion")
             else:
+                self.Node.get_logger().info("La animacion ya esta corriendo")
                 pass
             
-        #self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
     
     def stopAnimation(self):
-        #TODO: invocar ani.event_source.stop() para detener la animación
-        #Detener la animación
         if self.aniFlag:
             self.ani.event_source.stop()
             self.aniFlag = False
             self.Node.get_logger().info("Se detuvo la animacion")
         else:
-            self.Node.get_logger().info("La animacion ya esta detenida")
+            self.Node.get_logger().info("La animacion ya esta detenida o no se ha iniciado")
 
     def clearPlot(self):
-        #TODO: invocar una funcion para que limpie la grafica
-        #Limpiar la grafica (no se como lmao)
         self.ax.cla()
         x.clear()
         y.clear()
         self.setAxes(lim = 5)
         self.ax.plot(x,y)
         self.fig.canvas.draw_idle()
+        self.Node.get_logger().info("Se limpio el plot")
         
     
     def animate(self,i):
-        #Generacion de valores
-        #Esto no es necesario ya que el nodo se encarga de actualizar datos
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 5)
@@ -139,6 +134,7 @@ class MainFrame(tk.Frame):
         else:
             self.Node.cli = self.Node.create_client(String, "turtle_bot_player")
             self.Node.req = String.Request()
+            showinfo("Cliente creado", "El cliente fue creado correctamente")
 
     def sendFile(self):
         if self.Node.cli:
@@ -184,7 +180,6 @@ class interfaceNode(Node):
         self.file.write("\n")
 
     def posCallback(self, msg):
-        #TODO: logica para actualizar el vector de posiciones
         x.append(msg.linear.x)
         y.append(msg.linear.y)
 
@@ -241,7 +236,6 @@ def main():
 
         root1 = tk.Tk()
         root1.title("Turtle_bot_3")
-        #root1.geometry("1000x650")
         root1.protocol("WM_DELETE_WINDOW", lambda: on_closing(root1))
         root1.resizable(False, False)
         app = MainFrame(root1,Node)
@@ -265,7 +259,6 @@ def main():
         if file and not file.closed:
             file.close()
         print("se termino la ejecución del programa")
-        #sys.exit(0)
 
 if __name__ == "__main__":
     main()

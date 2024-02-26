@@ -16,6 +16,7 @@ class turtleBotPlayer(Node):
         self.turtle_player = self.create_publisher(Twist, "/turtlebot_cmdVel", 10)
         self.srv = self.create_service(String, 'turtle_bot_player', self.service_callback)
         self.get_logger().info('nodo turtle_bot_player creado correctamente')
+        self.get_logger().info('Listo para recibir un archivo')
     
     def service_callback(self, request, response):
         self.get_logger().info('Se recibio el archivo: %s' % request.data)
@@ -29,6 +30,7 @@ class turtleBotPlayer(Node):
                 time.sleep(0.05)
             file.close()
             self.get_logger().info('Archivo leido en su totalidad y movimientos publicados correctamente')
+            self.get_logger().info('Listo para recibir un archivo')
             return response
         except Exception as e:
             print("fallo el servicio de publicar movimiento")
@@ -40,9 +42,7 @@ def main(args=None):
     try:
         rclpy.spin(turtle_bot_player)
     except KeyboardInterrupt:
-        print("KeyboardInterrupt")
-    #turtle_bot_player.destroy_node()
-    #rclpy.shutdown()
+        print("\nFinalización del nodo con exito")
         
 
 

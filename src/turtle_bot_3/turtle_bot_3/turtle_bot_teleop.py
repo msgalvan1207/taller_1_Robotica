@@ -20,12 +20,9 @@ Para moverse:
     w
 a   s   d
 --------------------
-IMPORTANTE: para detener el nodo primero debes presionar la tecla ESC y lueco ctrl + c. 
+IMPORTANTE: para detener el nodo primero debes presionar la tecla ESC. 
 El anterior procedimiento es importante para que la consola en la que estas no explote
 CUIDADO: el programa siempre captara las teclas presionadas incluso si no estas en la consola
-
-Al presionar ESC tendras que volver a reinicar el nodo para poder seguir controlando el TurtleBot
-
 """
 
 def create_Listener(tecla):
@@ -33,14 +30,12 @@ def create_Listener(tecla):
     def on_press(key):
         try:
             if key.char == tecla:
-                #print('tecla %s pressionada' % key)
                 press[tecla] = True
         except AttributeError:
             pass
     def on_release(key):
         try:
             if key.char == tecla:
-                #print('tecla %s soltada' % key)
                 press[tecla] = False
         except AttributeError:
             pass
@@ -85,10 +80,8 @@ class TurtleBotTeleopNode(Node):
         self.linearVel = linearVel
         self.angularVel = angularVel
         self.msg = Twist()
-        key = 0
         self.turtle_controller = self.create_publisher(Twist, "/turtlebot_cmdVel", 10)
         self.timer_ = self.create_timer(0.05, self.send_velocity_command)
-        #self.timerkey_ = self.create_timer(0.05, self.get_keys)
         self.get_logger().info("Nodo turtle_bot_teleop creado correctamente")
 
 
