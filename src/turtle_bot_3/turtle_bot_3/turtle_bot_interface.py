@@ -142,7 +142,7 @@ class MainFrame(tk.Frame):
 
     def sendFile(self):
         if self.Node.cli:
-            if not self.Node.cli.wait_for_service(timeout_sec=1.0):
+            if not self.Node.cli.wait_for_service(timeout_sec=0.2):
                 showwarning("Servicio no disponible", "El servicio no esta disponible")
             else:
                 file = askopenfilename(filetypes=[("Text files", "*.txt")])
