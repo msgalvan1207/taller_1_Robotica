@@ -91,8 +91,7 @@ class MainFrame(tk.Frame):
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
         if self.ani is None:
-            print(inspect.signature(lambda i: self.animate(self,i)))
-            self.ani = FuncAnimation(self.fig, self.animate, interval=1000)
+            self.ani = FuncAnimation(self.fig, self.animate, interval=1000, blit=True)
             self.aniFlag = True
             self.Node.get_logger().info("Se inicio la animacion")
         else:
@@ -124,6 +123,8 @@ class MainFrame(tk.Frame):
         
     
     def animate(self,i):
+        print(x[-1])
+        print(y[-1])
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 5)
@@ -180,8 +181,13 @@ class interfaceNode(Node):
         self.file.write("\n")
 
     def posCallback(self, msg):
-        x.append(msg.linear.x)
-        y.append(msg.linear.y)
+        #self.get_logger().info('llego un mensaje')
+        x.append(float(msg.linear.x))
+        y.append(float(msg.linear.y))
+        #print(x[-1])
+        #print(y[-1])
+
+
 
         
 
