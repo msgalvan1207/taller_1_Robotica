@@ -41,10 +41,12 @@ def main(args=None):
         
         rclpy.spin(turtle_bot_player)
         
-        rclpy.shutdown()
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
+        
+        turtle_bot_player.destroy_node()
         rclpy.shutdown()
+        
 
 
 if __name__ == '__main__':
