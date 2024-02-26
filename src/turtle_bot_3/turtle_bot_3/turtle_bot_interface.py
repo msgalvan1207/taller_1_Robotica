@@ -166,6 +166,8 @@ class interfaceNode(Node):
         
         self.get_logger().info("Se Subscribira a el topico /turtlebot_position")
         self.PosSub = self.create_subscription(Twist, "/turtlebot_position", self.posCallback, 10)
+        #Declaracion del nombre del cliente para que luego no mande error.
+        self.cli = None
 
 
 
