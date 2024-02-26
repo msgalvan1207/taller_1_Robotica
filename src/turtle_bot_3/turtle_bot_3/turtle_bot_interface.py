@@ -54,7 +54,7 @@ class MainFrame(tk.Frame):
 
 
     
-    def setup_canvas(self, lim=3):
+    def setup_canvas(self, lim=2.3):
         self.setAxes(lim)
         
         
@@ -117,7 +117,7 @@ class MainFrame(tk.Frame):
         self.ax.cla()
         x.clear()
         y.clear()
-        self.setAxes(lim = 3)
+        self.setAxes(lim = 2.3)
         self.ax.plot(x,y)
         self.fig.canvas.draw_idle()
         self.Node.get_logger().info("Se limpio el plot")
@@ -130,7 +130,7 @@ class MainFrame(tk.Frame):
         #self.Node.get_logger().info("Se llamo a la funcion animate")
         self.ax.cla()
         self.ax.plot(x,y)
-        self.setAxes(lim = 3)
+        self.setAxes(lim = 2.3)
         #return lines
         
     def createClient(self):
@@ -155,7 +155,7 @@ class MainFrame(tk.Frame):
         else:
             showwarning("Cliente no creado", "Primero debe crear el cliente")
     
-    def setAxes(self, lim=3):
+    def setAxes(self, lim):
         self.ax.set_xlabel("X")
         self.ax.set_ylabel("Y")
         self.ax.set(xlim=(-lim-lim*0.1, lim+lim*0.1), ylim=(-lim-lim*0.1, lim+lim*0.1))
