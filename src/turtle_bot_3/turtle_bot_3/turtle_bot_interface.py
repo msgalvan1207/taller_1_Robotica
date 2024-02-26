@@ -131,12 +131,8 @@ class MainFrame(tk.Frame):
         if self.Node.cli:
             showwarning("Cliente ya creado", "El cliente ya fue creado")
         else:
-            ##El contenido de la funcion create client no estoy seguro de como deba ser
-            if not self.Node.cli.wait_for_service(timeout_sec=1.0):
-                showwarning("Servicio no disponible", "El servicio no esta disponible")
-            else:
-                self.Node.cli = self.Node.create_client(String, "turtle_bot_player")
-                self.Node.req = String.Request()
+            self.Node.cli = self.Node.create_client(String, "turtle_bot_player")
+            self.Node.req = String.Request()
 
     def sendFile(self):
         if self.Node.cli:
