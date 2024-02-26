@@ -118,10 +118,10 @@ class MainFrame(tk.Frame):
     def clearPlot(self):
         #TODO: invocar una funcion para que limpie la grafica
         #Limpiar la grafica (no se como lmao)
-        self.ax.clear()
+        self.ax.cla()
         x.clear()
         y.clear()
-        self.setAxes()
+        self.setAxes(lim = 5)
         self.ax.plot(x,y)
         self.fig.canvas.draw_idle()
         
