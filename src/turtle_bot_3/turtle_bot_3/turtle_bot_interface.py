@@ -127,6 +127,7 @@ class MainFrame(tk.Frame):
         #Estas lineas de aqui estan para poder hacer debug
         #print(x[-1])
         #print(y[-1])
+        self.Node.get_logger().info("Se llamo a la funcion animate")
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 5)
