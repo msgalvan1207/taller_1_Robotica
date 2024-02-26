@@ -35,17 +35,14 @@ class turtleBotPlayer(Node):
             print(traceback.format_exc())
 
 def main(args=None):
+    rclpy.init(args=args)
+    turtle_bot_player = turtleBotPlayer()
     try:
-        rclpy.init(args=args)
-        turtle_bot_player = turtleBotPlayer()
-        
         rclpy.spin(turtle_bot_player)
-        
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
-        
-        turtle_bot_player.destroy_node()
-        rclpy.shutdown()
+    turtle_bot_player.destroy_node()
+    rclpy.shutdown()
         
 
 
