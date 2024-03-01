@@ -18,3 +18,33 @@ Wayland y X11 se refiere a una configuración de la distro de Linux que termina 
 * descomentar la linea "WaylandEnable=false"
 * guardar el archivo y salir
 * Reiniciar la maquina
+
+
+
+## Ejecución de cada nodo
+
+### turtle_bot_teleop
+Este nodo requiere de la librearia "pynput" para poder funcionar correctamente, se invoca con el comando "ros2 run turtle_bot_3 turtle_bot_teleop".  
+Al iniciar el nodo, este primero pregunta por consola sobre las velocidades lineares y angulares para mandar al robot. Posteriormente, imprime en la consola un mensaje que explica como operar el robot.  
+Especificamente, hay que presionar las teclas wasd para operar, y presionar la tecla Esc para salir
+
+
+### turtle_bot_interface
+Este nodo utiliza matplotlib para poder mostrar la grafica de posición del nodo.
+[poner aqui una foto de la interface]
+Se inicia con el comando "ros2 run turtle_bot_3 turtle_bot_interface". Y al iniciar, aparece una ventana preguntando si se quiere guardar la entrada de teleop. En caso de que si, otra ventana va abrirse pidiendo que guardemos un archivo .txt. Despues, se seguira con aparecer la interface.  
+Para comenzar a graficar, se presiona el boton "Start". En caso de querer detener la grafica por cualquier motivo "Stop". Y tambien se puede limpiar el contenido de la grafica con "Clear". Para guardar la grafica, basta con pulsar el botn de guardar en la interfaz de matplotlib.  
+Los demas botones se utilizan para llamar al servicio de player. El primero, crea un cliente, el cual es el que va a realizar las llamadas al servicio. Despues, se puede llamar al boton de "Send file" para elegir un archivo .txt que halla sido creado por la interface, y enviar el nombre del archivo al player".
+Para terminar la ejecución, solo hay que cerrar la interface.
+
+*Advertencia*
+No hacer lo siguiente cuando se ejecuta la interface
+* Enviar mensajes al player mientras que el nodo teleop esta ejecutando.
+* No enviar mensajes cuando no hay cliente creado
+* No intentar crear un cliente cuando un cliente ya halla sido creado.
+
+
+### turtle_bot_player
+Este nodo no depende de liberias. Pero su funcionamiento, y la del cliente en la interface depende del servicio personalizado que se crea en el paquete custom_interfaces.  
+Se inicia con "ros2 run turtle_bot_3 turtle_bot_player". Y al iniciarlo, mostrara por consola cuando puede empezar a recibir peticiones. Cuando recibe una petición del cliente, mostrara el consola el archivo que le llego, y empezara a publicar su contenido en el topico de velocidad.  
+De igual manera, avisara cuando halla terminado.

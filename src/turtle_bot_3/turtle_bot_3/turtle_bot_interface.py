@@ -87,7 +87,6 @@ class MainFrame(tk.Frame):
     
     
     def startAnimation(self):
-        #TODO: invocar FuncAnimation para que empieze a animar
         #tiene que revisar si self.ani ya existe y si esta corriendo
         #Iniciar la animación
         if self.ani is None:
@@ -124,14 +123,9 @@ class MainFrame(tk.Frame):
         
     
     def animate(self,i):
-        #Estas lineas de aqui estan para poder hacer debug
-        #print(x[-1])
-        #print(y[-1])
-        #self.Node.get_logger().info("Se llamo a la funcion animate")
         self.ax.cla()
         self.ax.plot(x,y)
         self.setAxes(lim = 2.3)
-        #return lines
         
     def createClient(self):
         if self.Node.cli:
@@ -185,11 +179,8 @@ class interfaceNode(Node):
         self.file.write("\n")
 
     def posCallback(self, msg):
-        #self.get_logger().info('llego un mensaje')
         x.append(float(msg.linear.x))
         y.append(float(msg.linear.y))
-        #print(x[-1])
-        #print(y[-1])
 
 
 
@@ -227,6 +218,11 @@ def guardarInputs():
 
 
 def spinNode(Node):
+    """Función que se crea para que el nodo se ejecute en un hilo aparte
+
+    Args:
+        Node (Node): Nodo de ros 2 el cual se va a manterner ejecutando
+    """
     try:
         rclpy.spin(Node)
     except KeyboardInterrupt:
