@@ -20,7 +20,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'my_node = turtle_bot_3.my_node:main',
             'turtle_bot_teleop = turtle_bot_3.turtle_bot_teleop:main',
             'turtle_bot_interface = turtle_bot_3.turtle_bot_interface:main',
             'turtle_bot_player = turtle_bot_3.turtle_bot_player:main'
