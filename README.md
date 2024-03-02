@@ -47,4 +47,12 @@ No hacer lo siguiente cuando se ejecuta la interface
 ### turtle_bot_player
 Este nodo no depende de liberias. Pero su funcionamiento, y la del cliente en la interface depende del servicio personalizado que se crea en el paquete custom_interfaces.  
 Se inicia con "ros2 run turtle_bot_3 turtle_bot_player". Y al iniciarlo, mostrara por consola cuando puede empezar a recibir peticiones. Cuando recibe una petición del cliente, mostrara el consola el archivo que le llego, y empezara a publicar su contenido en el topico de velocidad.  
-De igual manera, avisara cuando halla terminado.
+De igual manera, avisara cuando halla terminado.  
+
+## Entregables
+
+### Informe
+El informe se encuentra en la carpeta de Docs. Dentro de esta carpeta tambien se encuentran los diagramas de explicación del funcionamiento de los nodos. La razón por la que se hizo esto es por el tamaño de los diagramas. Estos no cabian dentro del informe en menos de 6 paginas.
+
+### Videos
+Los videos generados para prueba del funcionamiento de todo eran demasiado grande para el repositorio. Se decidio incluir un link a OneDrive. Este se encuentra en la sección de anexos del informe.
