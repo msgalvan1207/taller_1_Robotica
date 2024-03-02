@@ -51,8 +51,6 @@ De igual manera, avisara cuando halla terminado.
 
 ## Entregables
 
-### Informe
-El informe se encuentra en la carpeta de Docs. Dentro de esta carpeta tambien se encuentran los diagramas de explicación del funcionamiento de los nodos. La razón por la que se hizo esto es por el tamaño de los diagramas. Estos no cabian dentro del informe en menos de 6 paginas.
 
 ### Videos
 Los videos generados para prueba del funcionamiento de todo eran demasiado grande para el repositorio. Se decidio incluir un link a OneDrive. Este se encuentra en la sección de anexos del informe.
